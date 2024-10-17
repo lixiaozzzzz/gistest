@@ -4,7 +4,7 @@ import XYZ from "ol/source/XYZ.js";
 import TileLayer from "ol/layer/Tile.js";
 import View from "ol/View.js";
 import { fromLonLat } from "ol/proj";
-import { ZoomToExtent } from "ol/control";
+import { ZoomToExtent, ZoomSlider, FullScreen } from "ol/control";
 const map = new Map({
   layers: [
     new TileLayer({
@@ -19,15 +19,24 @@ const map = new Map({
   target: "map",
   view: new View({
     center: fromLonLat([125.32, 43.88]),
-    zoom: 4,
+    zoom: 10,
     // maxZoom: 18,
-    // projection: "EPSG:3857",
+    projection: "EPSG:3857",
     constrainResolution: true, // 设置缩放级别为整数
     smoothResolutionConstraint: false, // 关闭无级缩放地图
   }),
 });
-
+const extent = [
+  fromLonLat([126.5, 45.5])[0], // 左下角 (minX, minY)
+  fromLonLat([126.5, 45.5])[1],
+  fromLonLat([126.8, 46.0])[0], // 右上角 (maxX, maxY)
+  fromLonLat([126.8, 46.0])[1],
+];
 const zoomToExtent = new ZoomToExtent({
-  extent: [110, 30, 160, 30],
+  extent,
 });
+const zoomSlider = new ZoomSlider();
+const fullscreen = new FullScreen();
 map.addControl(zoomToExtent);
+map.addControl(zoomSlider);
+map.addControl(fullscreen);
