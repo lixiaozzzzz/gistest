@@ -152,4 +152,8 @@ map.on("click", (evt) => {
   });
 });
 
-document.querySelector("#reset").addEventListener("click", () => {});
+document.querySelector("#reset").addEventListener("click", () => {
+  map.getView().animate({
+    center: fromLonLat([126.5, 45.5]),
+  });
+});

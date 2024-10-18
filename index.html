@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Accessible Map</title>
-    <link rel="stylesheet" href="node_modules/ol/ol.css" />
+    <!-- <link rel="stylesheet" href="node_modules/ol/ol.css" /> -->
     <style>
       html,
       body {
@@ -14,6 +14,7 @@
         margin: 0;
         padding: 0;
       }
+
       .map {
         width: 100%;
         height: 100%;
@@ -29,8 +30,9 @@
     </style>
   </head>
   <body>
-    <div id="map" class="map" tabindex="0"></div>
+    <!-- <div id="map" class="map" tabindex="0"></div> -->
+    <canvas id="canvas" width="500" height="500"></canvas>
     <button id="reset" class="btn">复位</button>
-    <script type="module" src="main.js"></script>
+    <script type="module" src="canvas.js"></script>
   </body>
 </html>
