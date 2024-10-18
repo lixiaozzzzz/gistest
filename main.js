@@ -10,6 +10,7 @@ import Point from "ol/geom/Point";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { Style, Circle, Fill, Stroke } from "ol/style";
+import { GeoJSON } from "ol/format";
 const map = new Map({
   layers: [
     new TileLayer({
@@ -68,4 +69,87 @@ const source = new VectorSource({
 const layer = new VectorLayer({
   source: source,
 });
-map.addLayer(layer);
+// map.addLayer(layer);
+
+const geojsonData = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      geometry: {
+        type: "LineString",
+        coordinates: [
+          [126.6, 45.7],
+          [126.7, 45.8],
+          [126.8, 45.6],
+        ],
+      },
+      properties: {
+        name: "Line Example",
+      },
+    },
+    {
+      type: "Feature",
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [126.6, 45.7],
+            [126.7, 45.9],
+            [126.9, 45.8],
+            [126.8, 45.6],
+            [126.6, 45.7],
+          ],
+        ],
+      },
+      properties: {
+        name: "Polygon Example",
+      },
+    },
+  ],
+};
+
+var nsource = new VectorSource({
+  url: "./data/geojson.json",
+  format: new GeoJSON({
+    dataProjection: "EPSG:4326", // 输入数据投影
+    featureProjection: "EPSG:3857", // 输出地图投影
+  }),
+  //   features: new GeoJSON().readFeatures(geojsonData, {
+  //     dataProjection: "EPSG:4326", // 输入数据投影
+  //     featureProjection: "EPSG:3857", // 输出地图投影
+  //   }),
+});
+var nlayer = new VectorLayer({
+  source: nsource,
+});
+var nstyle = new Style({
+  stroke: new Stroke({
+    color: "black",
+    width: 2,
+  }),
+  fill: new Fill({
+    color: "red",
+  }),
+});
+nlayer.setStyle(nstyle);
+map.addLayer(nlayer);
+
+const clickSource = new VectorSource();
+const clickAddLayer = new VectorLayer();
+clickAddLayer.setSource(clickSource);
+map.addLayer(clickAddLayer);
+map.on("click", (evt) => {
+  const { coordinate } = evt;
+  const npoint = new Feature({
+    geometry: new Point(coordinate),
+  });
+  clickAddLayer.setStyle(style);
+  clickSource.addFeature(npoint);
+  const view = map.getView();
+  view.animate({
+    center: coordinate,
+  });
+});
+
+document.querySelector("#reset").addEventListener("click", () => {});

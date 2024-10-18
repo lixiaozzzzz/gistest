@@ -1,0 +1,37 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [126.6, 45.7],
+          [126.7, 45.8],
+          [126.8, 45.6]
+        ]
+      },
+      "properties": {
+        "name": "Line Example"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [126.6, 45.7],
+            [126.7, 45.9],
+            [126.9, 45.8],
+            [126.8, 45.6],
+            [126.6, 45.7]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Polygon Example"
+      }
+    }
+  ]
+}
